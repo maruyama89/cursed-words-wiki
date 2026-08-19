@@ -1,6 +1,6 @@
 title: Cursed Words Wiki
 description: "Cursed Words: The Word Game That Isn't の非公式・個人用攻略メモ／用語集／英語学習ノート"
-theme: jekyll-theme-cayman
+theme: jekyll-theme-primer
 markdown: kramdown
 kramdown:
   parse_block_html: true
