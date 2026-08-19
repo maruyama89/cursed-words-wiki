@@ -17,11 +17,11 @@ Steamストアページによると、各キャラクターは固有の **Pin** 
 
 ---
 
-## Milky Way（ミルキー・ウェイ） {: #milky-wayミルキー・ウェイ}
+## Milky Way（ミルキー・ウェイ）
 
 **レアリティ**: UNIQUE
 
-**所有キャラ**: [Nina Nix](../characters/index.md#nina-nixニーナ・ニックス)（**ほぼ確定**。根拠は下記メモ参照）
+**所有キャラ**: [Nina Nix](../characters/index.md#nina-nixニーナニックス)（**ほぼ確定**。根拠は下記メモ参照）
 
 **原文 (EN)**:
 > Start of grid scatters 2 Void tiles. Voide tiles have a 10% chance to go Shiny

@@ -15,7 +15,7 @@ title: キャラクター
 
 ---
 
-## Nina Nix（ニーナ・ニックス） {: #nina-nixニーナ・ニックス}
+## Nina Nix（ニーナ・ニックス）
 
 **初出/文脈**: 墓碑銘（お墓のテキスト）（要確認: どのエリア/シーンかは追記予定）
 
@@ -29,7 +29,7 @@ title: キャラクター
 - 原文ママ: "Here is lies"（"Here lies" の言い間違い/誤植と思われる）、"amoungst"（"amongst" のスペルミス）。ゲームの作風（コミカル・皮肉気味な墓碑銘ジョーク）を踏まえると意図的な脱力ネタの可能性もあるため、修正せずそのまま引用している。
 - オチ: 感傷的な墓碑銘 → 実は当人（幽霊）がその場にいる、というギャグ構成。タイトルの "The Word Game That Isn't" 的なひねりのあるトーンと合っている（要確認: 他の墓碑銘キャラも同様のオチパターンか確認したい）。
 - 関連用語: TBD
-- **ビジュアル（ほぼ確定）**: 実プレイで見た、水色の肌・長い髪・ポニーテールの人型キャラクターがNina Nix。「UPGRADE YOUR SECRET SOCIETY PIN」画面で、このキャラクターの[Pin](../glossary/index.md#pin)アップグレード効果が [Milky Way](../abilities/index.md#milky-wayミルキー・ウェイ) の原文と数値まで完全一致したため、Milky Way = Nina NixのSecret Society Pinとほぼ確定した。
+- **ビジュアル（ほぼ確定）**: 実プレイで見た、水色の肌・長い髪・ポニーテールの人型キャラクターがNina Nix。「UPGRADE YOUR SECRET SOCIETY PIN」画面で、このキャラクターの[Pin](../glossary/index.md#pin)アップグレード効果が [Milky Way](../abilities/index.md#milky-wayミルキーウェイ) の原文と数値まで完全一致したため、Milky Way = Nina NixのSecret Society Pinとほぼ確定した。
 
 ---
 

@@ -26,7 +26,7 @@ title: 文法メモ
 
 ### "Here lies X"（墓碑銘の定型句）
 
-**出典**: [Nina Nixの墓碑銘](../characters/index.md#nina-nixニーナ・ニックス)
+**出典**: [Nina Nixの墓碑銘](../characters/index.md#nina-nixニーナニックス)
 > Here is lies Nina NIX.
 
 **解説**: 英語圏の墓石でよく使われる定型句 "Here lies [名前]"（ここに[名前]眠る）。"lie"はここでは「横たわる」の意の自動詞（lie-lay-lain、"lay"（横たえる、産む）と混同されやすいので注意）。
@@ -36,7 +36,7 @@ title: 文法メモ
 
 ### START OF GRID: ...（条件節が省略されたゲームUI特有の文体）
 
-**出典**: [Milky Wayの効果文](../abilities/index.md#milky-wayミルキー・ウェイ) 他多数
+**出典**: [Milky Wayの効果文](../abilities/index.md#milky-wayミルキーウェイ) 他多数
 > Start of grid scatters 2 Void tiles.
 
 **解説**: カードゲーム・ローグライク系でよく見る「トリガー: 効果」という省略文体。本来なら "At the start of the grid, [it] scatters 2 Void tiles." のように主語や前置詞を補って読む必要がある。

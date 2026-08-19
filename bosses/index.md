@@ -40,7 +40,7 @@ title: ボス
 > 各グリッド<small>(each grid)</small>にVOIDタイルを3枚ばらまく<small>(scatters ... onto)</small>。
 
 **メモ**:
-- 一見妨害効果に見えるが、[Dusty Coffin](../items/index.md)や[Milky Way](../abilities/index.md#milky-wayミルキー・ウェイ)などVOID軸のビルドなら、VOIDタイルの供給源として逆に追い風になりうる。ストア説明文「can be manipulated into multiplying your score even higher」の実例と思われる。
+- 一見妨害効果に見えるが、[Dusty Coffin](../items/index.md)や[Milky Way](../abilities/index.md#milky-wayミルキーウェイ)などVOID軸のビルドなら、VOIDタイルの供給源として逆に追い風になりうる。ストア説明文「can be manipulated into multiplying your score even higher」の実例と思われる。
 
 ---
 
