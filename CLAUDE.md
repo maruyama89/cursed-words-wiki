@@ -9,6 +9,11 @@ URMA Soundとは完全に無関係の別プロジェクト。
 - 単語で遊ぶゲームという特性を活かし、ゲーム内テキストから英単語・文法を学ぶ勉強ノートも兼ねる
 - 一次的には自分用だが、将来的に他の日本語プレイヤーの役にも立てば良い、という緩いスタンス
 
+## 公開ページ
+- https://maruyama89.github.io/cursed-words-wiki/ （GitHub Pages、リポジトリ: `maruyama89/cursed-words-wiki`）
+- 実体は `index.html`（Claude Artifactの「Cursed Words Codex」をそのまま静的HTMLとして配置したもの）。Markdown各ファイルを更新したら、Artifact側も更新した上で `index.html` にコピーし、コミット・pushして同期する運用
+- Markdownファイルは編集用の一次情報。Jekyll等のテーマは使わず、`.nojekyll` を置いて静的配信している（過去にJekyllテーマを試したが見た目が合わずCodexそのものを公開する方式に変更した）
+
 ## 構成
 - [README.md](README.md) — プロジェクト概要
 - [overview.md](overview.md) — ゲーム概要（開発元・発売日・システム全体像）

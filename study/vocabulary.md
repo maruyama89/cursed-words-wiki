@@ -1,8 +1,3 @@
----
-layout: default
-title: 単語帳
----
-
 # 単語帳
 
 ゲーム内テキスト（キャラ説明・アイテム効果・ストア説明文など）に出てきた単語・熟語のうち、覚えておきたいものをまとめる。
@@ -16,10 +11,10 @@ title: 単語帳
 
 | 単語・熟語 (EN) | 意味 (JA) | 品詞 | 出典 | メモ |
 |---|---|---|---|---|
-| sparkle in one's eye | 瞳の輝き、生き生きとした目つき（イディオム） | 熟語 | [Nina Nixの墓碑銘](../characters/index.md#nina-nixニーナニックス) | "have a sparkle in her eye" で「生き生きしている」というニュアンス |
-| lust for life | 生への渇望、貪欲なまでの生きる意欲 | 熟語 | [Nina Nixの墓碑銘](../characters/index.md#nina-nixニーナニックス) | lust は本来「強い欲望・欲情」で強い語。lust for life は決まり文句（イギー・ポップのアルバム名としても有名） |
-| amongst | ～の間で（amongのやや文語的・古風な言い方） | 前置詞 | [Nina Nixの墓碑銘](../characters/index.md#nina-nixニーナニックス) | 墓碑銘らしい格調高い言い回し。原文は "amoungst" とスペルミスされている（要確認：意図的な誤字表現の可能性） |
-| turns out (that) | 実は～だと判明する | 熟語（口語） | [Nina Nixの墓碑銘](../characters/index.md#nina-nixニーナニックス) | "Oh wait there she is, turns out she's a ghost now." のように、意外な事実を明かす時によく使う口語表現 |
+| sparkle in one's eye | 瞳の輝き、生き生きとした目つき（イディオム） | 熟語 | [Nina Nixの墓碑銘](../characters/index.md#nina-nixニーナ・ニックス) | "have a sparkle in her eye" で「生き生きしている」というニュアンス |
+| lust for life | 生への渇望、貪欲なまでの生きる意欲 | 熟語 | [Nina Nixの墓碑銘](../characters/index.md#nina-nixニーナ・ニックス) | lust は本来「強い欲望・欲情」で強い語。lust for life は決まり文句（イギー・ポップのアルバム名としても有名） |
+| amongst | ～の間で（amongのやや文語的・古風な言い方） | 前置詞 | [Nina Nixの墓碑銘](../characters/index.md#nina-nixニーナ・ニックス) | 墓碑銘らしい格調高い言い回し。原文は "amoungst" とスペルミスされている（要確認：意図的な誤字表現の可能性） |
+| turns out (that) | 実は～だと判明する | 熟語（口語） | [Nina Nixの墓碑銘](../characters/index.md#nina-nixニーナ・ニックス) | "Oh wait there she is, turns out she's a ghost now." のように、意外な事実を明かす時によく使う口語表現 |
 | slippery | (1)ぬるぬるした、滑りやすい (2)つかみどころのない、あいまいな | 形容詞 | [Rodmanのキャラ説明](../characters/index.md#rodmanロッドマン) | "slippery meanings"＝「意味がはっきりしない、多義的な」の意（比喩的用法） |
 | tickle | くすぐる | 動詞 | [Rodmanのキャラ説明](../characters/index.md#rodmanロッドマン) | "tickle one's whiskers" は直訳的表現だが「大好物である」の比喩として使われている |
 | whiskers | (動物の)ひげ | 名詞 | [Rodmanのキャラ説明](../characters/index.md#rodmanロッドマン) | ネコ・ネズミなど動物のひげ。人間の顎ひげは beard/mustache |

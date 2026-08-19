@@ -1,8 +1,3 @@
----
-layout: default
-title: ボス
----
-
 # ボス
 
 「CHOOSE YOUR OPPONENT」画面で、2体のボスから1体を選んで戦う形式（実機確認）。ボスにはそれぞれ固有のルール変更効果があり、戦闘に影響する。ストア説明文にある「20 bosses that'll try to sabotage your runs, or can be manipulated into multiplying your score even higher（妨害してくることもあれば、逆に利用してスコアを稼ぐ手段になることもある）」の具体的な仕組みがこれだと思われる。
@@ -40,7 +35,7 @@ title: ボス
 > 各グリッド<small>(each grid)</small>にVOIDタイルを3枚ばらまく<small>(scatters ... onto)</small>。
 
 **メモ**:
-- 一見妨害効果に見えるが、[Dusty Coffin](../items/index.md)や[Milky Way](../abilities/index.md#milky-wayミルキーウェイ)などVOID軸のビルドなら、VOIDタイルの供給源として逆に追い風になりうる。ストア説明文「can be manipulated into multiplying your score even higher」の実例と思われる。
+- 一見妨害効果に見えるが、[Dusty Coffin](../items/index.md)や[Milky Way](../abilities/index.md#milky-wayミルキー・ウェイ)などVOID軸のビルドなら、VOIDタイルの供給源として逆に追い風になりうる。ストア説明文「can be manipulated into multiplying your score even higher」の実例と思われる。
 
 ---
 

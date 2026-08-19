@@ -1,8 +1,3 @@
----
-layout: default
-title: 用語集
----
-
 # 用語集
 
 Cursed Words: The Word Game That Isn't に登場する未日本語化の用語・システム名などをまとめる。
@@ -19,8 +14,8 @@ Cursed Words: The Word Game That Isn't に登場する未日本語化の用語�
 | 原語 (EN) | 訳案 (JA) | 説明 | 初出/文脈 | メモ |
 |---|---|---|---|---|
 | （例）TBD | TBD | TBD | TBD | TBD |
-| Void tile | Voidタイル | グリッド上に出現するタイルの一種（要確認：効果詳細） | アビリティ [Milky Way](../abilities/index.md#milky-wayミルキーウェイ) | Shiny化する場合がある。ストアのキャッチコピー「the infinite void」とも関連か（要確認） |
-| Shiny | Shiny（シャイニー） | タイルが変化する状態（要確認：効果詳細） | アビリティ [Milky Way](../abilities/index.md#milky-wayミルキーウェイ)、アイテム [Magic Wand](../items/index.md) | Voidタイルが10%の確率でShiny化、との記述あり。DEVLOG「The Shine and The Void」参照（要視聴） |
+| Void tile | Voidタイル | グリッド上に出現するタイルの一種（要確認：効果詳細） | アビリティ [Milky Way](../abilities/index.md#milky-wayミルキー・ウェイ) | Shiny化する場合がある。ストアのキャッチコピー「the infinite void」とも関連か（要確認） |
+| Shiny | Shiny（シャイニー） | タイルが変化する状態（要確認：効果詳細） | アビリティ [Milky Way](../abilities/index.md#milky-wayミルキー・ウェイ)、アイテム [Magic Wand](../items/index.md) | Voidタイルが10%の確率でShiny化、との記述あり。DEVLOG「The Shine and The Void」参照（要視聴） |
 | Grid | グリッド | 単語を作る盤面。1ステージにつき複数（例: "GRID 1 OF 5"の表示あり）（要確認：Encounterとの対応関係）。行×列のサイズを持ち、ボスによって変更されることがある（例: "The grid is 4x3."） | ショップ/プレイ画面、ボス効果文 | "START OF GRID" のようにアビリティ発動タイミングとしても使われる。デフォルトのサイズは未確認（要確認） |
 | Word Score | ワードスコア | 提出した単語1つに対するスコア | アイテム効果テキスト | 例: "+25 WORD SCORE" |
 | Tile Score | タイルスコア | 個々のタイルが持つスコア（要確認：Word Scoreとの計算関係） | アイテム効果テキスト | 例: "+25 TILE SCORE" |
@@ -28,7 +23,7 @@ Cursed Words: The Word Game That Isn't に登場する未日本語化の用語�
 | Sticker | ステッカー | ステージクリア後などのショップ画面で購入できるアップグレード要素（プレイヤー確認済み） | ショップ画面（[items/index.md](../items/index.md)のアイテムはほぼ全てSticker） | Stamp とあわせて合計300種。Stampとの違い・入手経路の違いは引き続き要確認 |
 | Tile | タイル | 各Encounterに持ち込む消費アイテム（要確認：文字タイルとの関係） | ストア説明文 | 「文字タイル」とは別に「4つの柱」の1つとしてのTileがある可能性（要確認・混同注意） |
 | Character | キャラクター | プレイアブルキャラクター。全11種、プレイスタイルが大きく異なる | ストア説明文 | 各キャラは固有の Pin を持つ |
-| Pin | ピン（正式名称: **Secret Society Pin**） | キャラクター固有の基本アビリティ。実機の「UPGRADE YOUR SECRET SOCIETY PIN」画面でアップグレード可能（複数段階あり）。「個数+2」か「確率+10%」かの二択形式で加算強化する | ストア説明文、実機アップグレード画面 | [Milky Way](../abilities/index.md#milky-wayミルキーウェイ)がNina NixのPin（基本形）であることをほぼ確定。アップグレード画面の$表示は所持金であり、アップグレード自体の価格として明示されたものではない点に注意 |
+| Pin | ピン（正式名称: **Secret Society Pin**） | キャラクター固有の基本アビリティ。実機の「UPGRADE YOUR SECRET SOCIETY PIN」画面でアップグレード可能（複数段階あり）。「個数+2」か「確率+10%」かの二択形式で加算強化する | ストア説明文、実機アップグレード画面 | [Milky Way](../abilities/index.md#milky-wayミルキー・ウェイ)がNina NixのPin（基本形）であることをほぼ確定。アップグレード画面の$表示は所持金であり、アップグレード自体の価格として明示されたものではない点に注意 |
 | COLOURLESS tile / colourless word | 無色タイル/無色の単語 | 色（RED/BLUE等）が付いていないタイル、またはそれで構成された単語 | アイテム [Parrot](../items/index.md#parrot)、[Ornate Key](../items/index.md) | 色付きタイルの逆概念。無色であること自体に価値を与えるアイテムが複数存在 |
 | Encounter | エンカウント | 1ステージ内の戦闘/挑戦単位。1ステージにつき2 Encounter + Bossで構成。進行アイコンは通常Encounterが🏠、Boss戦は骸骨風アイコンに変わる（実機確認） | ストア説明文、実機トップバー | |
 | Boss | ボス | 各ステージ最後に登場。全20種。実機では「CHOOSE YOUR OPPONENT」画面で2体から1体を選ぶ形式で、ボスごとに固有のルール変更効果を持つ。妨害的な効果に見えても、自分のビルド次第で逆に利用できる（ストア説明文の主張どおり） | ストア説明文、実機「CHOOSE YOUR OPPONENT」画面 | 詳細は [bosses/index.md](../bosses/index.md) 参照 |

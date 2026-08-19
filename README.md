@@ -1,7 +1,11 @@
 # Cursed Words Wiki（非公式・個人メモ）
 
+🌐 **公開ページ（ホバー辞書付き）**: https://maruyama89.github.io/cursed-words-wiki/
+
 **Cursed Words: The Word Game That Isn't** の日本語プレイヤー向け非公式メモです。
 このゲームは日本語化されていないため、ゲーム内用語やシステムの解説、進行メモを自分用にまとめています。誰かの役に立てば幸いです。
+
+以下のMarkdownファイルは編集用の一次情報（ソース）です。閲覧用の完成版は上記の公開ページをどうぞ。
 
 ## 中身
 - [overview.md](overview.md) — ゲーム概要（開発元・発売日・システム全体像、Steamストアページより）

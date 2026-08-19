@@ -1,0 +1,958 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cursed Words Codex</title>
+<meta name="description" content="Cursed Words: The Word Game That Isn't の非公式Codex兼英語学習ノート。ホバーで意味が出るツールチップ付き。">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%94%A4%3C/text%3E%3C/svg%3E">
+<style>
+  @media (prefers-reduced-motion: reduce) {
+    * { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; scroll-behavior: auto !important; }
+  }
+
+  :root {
+    --bg: #efe6cf;
+    --surface: #fbf6e8;
+    --surface-2: #f4ecd6;
+    --ink: #241c12;
+    --ink-soft: #5b5140;
+    --ink-faint: #8a7d63;
+    --line: #cbb98a;
+    --line-soft: #ddd0a4;
+    --red: #a5342a;
+    --red-soft: #a5342a1a;
+    --blue: #274c77;
+    --blue-soft: #274c771a;
+    --gold: #8a5c17;
+    --gold-soft: #9c6b1f22;
+    --violet: #5b4b8a;
+    --violet-soft: #5b4b8a1f;
+    --tile-bg: #e4d3a0;
+    --tile-edge: #b39a5e;
+    --tile-ink: #241c12;
+    --focus: #274c77;
+    --shadow: 0 8px 24px -8px rgba(36, 28, 18, 0.35);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #140f1e;
+      --surface: #1d1730;
+      --surface-2: #241c3c;
+      --ink: #ede7f5;
+      --ink-soft: #b6a9d1;
+      --ink-faint: #837aa0;
+      --line: #3a2d59;
+      --line-soft: #2b2244;
+      --red: #e07463;
+      --red-soft: #e074631f;
+      --blue: #7fb0e6;
+      --blue-soft: #7fb0e61f;
+      --gold: #dba847;
+      --gold-soft: #dba84722;
+      --violet: #a992e0;
+      --violet-soft: #a992e022;
+      --tile-bg: #2a2140;
+      --tile-edge: #4a3a70;
+      --tile-ink: #ede7f5;
+      --focus: #7fb0e6;
+      --shadow: 0 12px 32px -8px rgba(0, 0, 0, 0.6);
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --bg: #140f1e;
+    --surface: #1d1730;
+    --surface-2: #241c3c;
+    --ink: #ede7f5;
+    --ink-soft: #b6a9d1;
+    --ink-faint: #837aa0;
+    --line: #3a2d59;
+    --line-soft: #2b2244;
+    --red: #e07463;
+    --red-soft: #e074631f;
+    --blue: #7fb0e6;
+    --blue-soft: #7fb0e61f;
+    --gold: #dba847;
+    --gold-soft: #dba84722;
+    --violet: #a992e0;
+    --violet-soft: #a992e022;
+    --tile-bg: #2a2140;
+    --tile-edge: #4a3a70;
+    --tile-ink: #ede7f5;
+    --focus: #7fb0e6;
+    --shadow: 0 12px 32px -8px rgba(0, 0, 0, 0.6);
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: Georgia, "Iowan Old Style", "Times New Roman", serif;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  ::selection { background: var(--gold-soft); }
+
+  a { color: var(--blue); }
+
+  .mono {
+    font-family: ui-monospace, "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+  }
+
+  .sans {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  }
+
+  .page { max-width: 920px; margin: 0 auto; padding: 0 20px 96px; }
+
+  /* ---------- topbar ---------- */
+  .topbar {
+    position: sticky; top: 0; z-index: 40;
+    background: color-mix(in srgb, var(--bg) 88%, transparent);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--line-soft);
+  }
+  .topbar-inner {
+    max-width: 920px; margin: 0 auto; padding: 10px 20px;
+    display: flex; align-items: center; gap: 18px; flex-wrap: wrap;
+  }
+  .brand {
+    font-family: ui-monospace, "SFMono-Regular", Consolas, Menlo, monospace;
+    font-weight: 700; font-size: 0.82rem; letter-spacing: 0.02em;
+    color: var(--ink); text-decoration: none; white-space: nowrap;
+  }
+  .navlinks { display: flex; gap: 4px; flex-wrap: wrap; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+  .navlinks a {
+    color: var(--ink-soft); text-decoration: none; font-size: 0.8rem;
+    padding: 6px 9px; border-radius: 5px; letter-spacing: 0.01em;
+  }
+  .navlinks a:hover, .navlinks a:focus-visible { background: var(--surface-2); color: var(--ink); }
+
+  /* ---------- hero ---------- */
+  .hero { padding: 56px 0 34px; }
+  .tiles-word { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 22px; }
+  .tile {
+    display: inline-flex; align-items: flex-end; justify-content: center;
+    width: 40px; height: 40px; background: var(--tile-bg);
+    border: 1px solid var(--tile-edge); border-radius: 6px;
+    box-shadow: 0 2px 0 var(--tile-edge);
+    font-family: ui-monospace, "SFMono-Regular", Consolas, Menlo, monospace;
+    font-weight: 700; font-size: 1.25rem; color: var(--tile-ink);
+    position: relative; padding-bottom: 4px;
+  }
+  .tile::after {
+    content: attr(data-v);
+    position: absolute; top: 2px; right: 4px;
+    font-size: 0.5rem; opacity: 0.6; font-weight: 600;
+  }
+  .hero h1 {
+    font-family: Georgia, "Iowan Old Style", serif;
+    font-size: clamp(1.6rem, 4vw, 2.3rem);
+    margin: 0 0 8px; text-wrap: balance; font-weight: 700;
+  }
+  .hero .en-title { color: var(--ink-soft); font-size: 0.95rem; margin: 0 0 20px; }
+  .hero p.lede { max-width: 62ch; color: var(--ink); font-size: 1.02rem; }
+  .hero .tagline {
+    margin-top: 18px; padding: 14px 16px; border-left: 3px solid var(--blue);
+    background: var(--surface); border-radius: 0 8px 8px 0; max-width: 62ch;
+    font-style: italic; color: var(--ink-soft); font-size: 0.92rem;
+  }
+
+  /* ---------- sections ---------- */
+  section.block { padding: 40px 0; border-top: 1px solid var(--line-soft); }
+  section.block:first-of-type { border-top: none; }
+  .eyebrow {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    text-transform: uppercase; letter-spacing: 0.09em; font-size: 0.7rem;
+    color: var(--ink-faint); margin: 0 0 6px;
+  }
+  h2.title { font-size: 1.5rem; margin: 0 0 6px; text-wrap: balance; }
+  .section-note { color: var(--ink-soft); font-size: 0.92rem; max-width: 62ch; margin: 0 0 22px; }
+  .prose { max-width: 62ch; }
+  .prose p { margin: 0 0 12px; }
+
+  /* ---------- term tooltip trigger ---------- */
+  .term {
+    text-decoration: underline dotted var(--ink-faint) 1.5px;
+    text-underline-offset: 3px; cursor: help;
+    background: none; border: none; font: inherit; color: inherit; padding: 0;
+  }
+  .term:hover, .term:focus-visible, .term[aria-expanded="true"] {
+    background: var(--gold-soft); border-radius: 2px;
+  }
+  .term:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+
+  #tooltip {
+    position: fixed; z-index: 100; max-width: 280px;
+    background: var(--surface); border: 1px solid var(--line);
+    border-radius: 10px; box-shadow: var(--shadow); padding: 12px 14px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-size: 0.84rem; line-height: 1.45;
+  }
+  #tooltip[hidden] { display: none; }
+  #tooltip .tt-en { font-family: ui-monospace, Consolas, Menlo, monospace; font-weight: 700; font-size: 0.78rem; color: var(--ink-faint); margin-bottom: 2px; }
+  #tooltip .tt-ja { font-weight: 700; color: var(--ink); margin-bottom: 4px; }
+  #tooltip .tt-desc { color: var(--ink-soft); margin-bottom: 8px; }
+  #tooltip .tt-link { font-size: 0.76rem; text-decoration: none; color: var(--blue); }
+  #tooltip .tt-link:hover { text-decoration: underline; }
+
+  /* ---------- cards ---------- */
+  .card {
+    background: var(--surface); border: 1px solid var(--line-soft);
+    border-radius: 12px; padding: 20px 22px; margin-bottom: 18px;
+  }
+  .card h3 { margin: 0 0 2px; font-size: 1.1rem; }
+  .card .sub { color: var(--ink-faint); font-family: ui-monospace, Consolas, Menlo, monospace; font-size: 0.72rem; letter-spacing: 0.03em; text-transform: uppercase; margin-bottom: 12px; }
+  blockquote.game-text {
+    margin: 10px 0; padding: 10px 14px; border-left: 3px solid var(--line);
+    background: var(--surface-2); border-radius: 0 6px 6px 0;
+    font-family: ui-monospace, Consolas, Menlo, monospace; font-size: 0.84rem;
+    color: var(--ink-soft); white-space: pre-wrap;
+  }
+  .translation { margin: 6px 0 12px; }
+  .gloss {
+    font-family: ui-monospace, "SFMono-Regular", Consolas, Menlo, monospace;
+    font-size: 0.74em; color: var(--ink-faint); white-space: nowrap;
+  }
+  td.ja { max-width: 340px; }
+  .note-label { font-family: -apple-system, sans-serif; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.07em; color: var(--ink-faint); margin: 12px 0 4px; }
+  .note-list { margin: 0; padding-left: 18px; color: var(--ink-soft); font-size: 0.9rem; }
+  .note-list li { margin-bottom: 4px; }
+
+  /* ---------- chips ---------- */
+  .chip {
+    display: inline-block; font-family: ui-monospace, Consolas, Menlo, monospace;
+    font-size: 0.68rem; font-weight: 700; letter-spacing: 0.04em;
+    padding: 2px 8px; border-radius: 100px; text-transform: uppercase;
+  }
+  .chip--common { background: var(--surface-2); color: var(--ink-faint); border: 1px solid var(--line); }
+  .chip--rare { background: var(--blue-soft); color: var(--blue); }
+  .chip--legendary { background: var(--gold-soft); color: var(--gold); }
+  .chip--unique { background: var(--violet-soft); color: var(--violet); }
+  .chip--unconfirmed { background: var(--surface-2); color: var(--ink-faint); border: 1px dashed var(--line); }
+
+  /* ---------- search + table ---------- */
+  .search-row { margin-bottom: 14px; }
+  .search-input {
+    width: 100%; max-width: 340px; padding: 8px 12px; border-radius: 8px;
+    border: 1px solid var(--line); background: var(--surface); color: var(--ink);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-size: 0.88rem;
+  }
+  .search-input:focus-visible { outline: 2px solid var(--focus); outline-offset: 1px; }
+  .search-input::placeholder { color: var(--ink-faint); }
+  .table-scroll { overflow-x: auto; border: 1px solid var(--line-soft); border-radius: 12px; background: var(--surface); }
+  table { border-collapse: collapse; width: 100%; min-width: 640px; font-size: 0.86rem; }
+  thead th {
+    text-align: left; font-family: -apple-system, sans-serif; text-transform: uppercase;
+    font-size: 0.68rem; letter-spacing: 0.06em; color: var(--ink-faint);
+    padding: 10px 14px; border-bottom: 1px solid var(--line); white-space: nowrap;
+  }
+  tbody td { padding: 10px 14px; border-bottom: 1px solid var(--line-soft); vertical-align: top; }
+  tbody tr:last-child td { border-bottom: none; }
+  tbody tr:hover { background: var(--surface-2); }
+  td.en { font-family: ui-monospace, Consolas, Menlo, monospace; font-weight: 700; white-space: nowrap; }
+  td.muted { color: var(--ink-faint); font-size: 0.8rem; }
+  .no-results { padding: 20px 14px; color: var(--ink-faint); font-size: 0.86rem; display: none; }
+
+  /* ---------- pillars ---------- */
+  .pillars { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; margin: 20px 0; }
+  .pillar {
+    background: var(--surface); border: 1px solid var(--line-soft); border-radius: 10px;
+    padding: 14px 16px; position: relative;
+  }
+  .pillar .n {
+    position: absolute; top: 10px; right: 12px; font-family: ui-monospace, Consolas, Menlo, monospace;
+    font-size: 0.68rem; color: var(--ink-faint); font-weight: 700;
+  }
+  .pillar h4 { margin: 0 0 4px; font-size: 0.95rem; font-family: -apple-system, sans-serif; }
+  .pillar p { margin: 0; font-size: 0.82rem; color: var(--ink-soft); }
+
+  .fact-grid { display: grid; grid-template-columns: max-content 1fr; gap: 6px 16px; font-size: 0.9rem; margin: 18px 0; }
+  .fact-grid dt { color: var(--ink-faint); font-family: -apple-system, sans-serif; font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.04em; padding-top: 2px; }
+  .fact-grid dd { margin: 0; }
+
+  .unresolved {
+    font-family: -apple-system, sans-serif; font-size: 0.72rem; color: var(--red);
+    background: var(--red-soft); padding: 1px 6px; border-radius: 4px; margin-left: 4px;
+  }
+
+  footer.disclaimer {
+    max-width: 62ch; margin: 60px auto 0; padding-top: 24px; border-top: 1px solid var(--line-soft);
+    color: var(--ink-faint); font-size: 0.8rem; font-family: -apple-system, sans-serif;
+  }
+
+  @media (max-width: 560px) {
+    .navlinks { display: none; }
+    .hero { padding: 40px 0 24px; }
+  }
+
+  .counter-badge { margin-left: auto; display: flex; align-items: center; }
+  .counter-badge img { display: block; height: 20px; border-radius: 4px; }
+</style>
+</head>
+<body>
+
+<div class="page">
+  <div class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="#top">CURSED WORDS <span style="opacity:.5">// codex</span></a>
+      <nav class="navlinks">
+        <a href="#overview">概要</a>
+        <a href="#glossary">用語集</a>
+        <a href="#characters">キャラクター</a>
+        <a href="#abilities">アビリティ</a>
+        <a href="#items">アイテム</a>
+        <a href="#bosses">ボス</a>
+        <a href="#study">単語・文法</a>
+      </nav>
+      <span class="counter-badge"><img src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fmaruyama89.github.io%2Fcursed-words-wiki%2F&count_bg=%2379C83D&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=views&edge_flat=false" alt="views" loading="lazy"></span>
+    </div>
+  </div>
+
+  <div id="top"></div>
+
+  <section class="hero">
+    <div class="tiles-word" aria-hidden="true">
+      <span class="tile" data-v="3">C</span><span class="tile" data-v="1">U</span><span class="tile" data-v="1">R</span><span class="tile" data-v="1">S</span><span class="tile" data-v="1">E</span><span class="tile" data-v="1">D</span>
+    </div>
+    <p class="en-title mono">CURSED WORDS: THE WORD GAME THAT ISN'T</p>
+    <h1>非公式 Codex ＆ 英語学習ノート</h1>
+    <p class="lede">
+      日本語未対応のローグライク単語ゲーム <em>Cursed Words</em> を遊びながら書き溜めている個人用メモ。
+      キャラクター・アビリティ・アイテムの原文と訳、システム用語の
+      <button class="term" data-id="glossary-self">用語集</button>、
+      そしてゲーム内テキストから拾った英単語・文法をまとめている。
+      本文中の点線付きの単語にカーソルを合わせる（またはタップする）と意味が出る。
+    </p>
+    <p class="tagline">"Starts as Boggle, ends as Schrödinger" — 単語を書き綴るゲームは、やがて単語が数字や記号、そして無限の <button class="term" data-id="void-tile">void</button> に変わっていく。</p>
+  </section>
+
+  <main>
+
+    <section class="block" id="overview">
+      <p class="eyebrow">Overview</p>
+      <h2 class="title">ゲーム概要</h2>
+      <p class="section-note">出典: Steamストアページ（2026-08-19時点）。詳細は各セクション参照。</p>
+
+      <dl class="fact-grid">
+        <dt>開発元</dt><dd>Buried Things</dd>
+        <dt>パブリッシャー</dt><dd>Forklift Interactive</dd>
+        <dt>リリース日</dt><dd>2026年4月2日</dd>
+        <dt>価格</dt><dd>¥2,000（サウンドトラックDLC ¥350）</dd>
+        <dt>対応言語</dt><dd>英語のみ。<strong>日本語は非対応</strong></dd>
+        <dt>評価</dt><dd>総合: 圧倒的に好評（662件） / 最近: 非常に好評（32件）</dd>
+      </dl>
+
+      <p class="prose">1回のランは4つの柱で構成される。<button class="term" data-id="sticker">Sticker</button> と <button class="term" data-id="stamp">Stamp</button> はあわせて300種、<button class="term" data-id="character">Character</button> は11種、それぞれ固有の <button class="term" data-id="pin">Pin</button> を持つ。</p>
+
+      <div class="pillars">
+        <div class="pillar"><span class="n">1</span><h4>Character</h4><p>11種。固有のPinを持つ</p></div>
+        <div class="pillar"><span class="n">2</span><h4>Sticker</h4><p>アップグレード要素</p></div>
+        <div class="pillar"><span class="n">3</span><h4>Stamp</h4><p>ロードアウト要素</p></div>
+        <div class="pillar"><span class="n">4</span><h4>Tile</h4><p>Encounter毎の消費アイテム</p></div>
+      </div>
+
+      <p class="prose">基本ランは <button class="term" data-id="stage">Stage</button> 5つ、各Stageは <button class="term" data-id="encounter">Encounter</button> 2つ＋<button class="term" data-id="boss">Boss</button> 1体で構成。Stage 5クリアでラン勝利となり、その後は <button class="term" data-id="challenge">Challenge</button>（全26種）や <button class="term" data-id="crown">Crown</button>、<button class="term" data-id="quest">Quest</button> に挑戦できる。Boss は全20種。</p>
+    </section>
+
+    <section class="block" id="glossary">
+      <p class="eyebrow">Glossary</p>
+      <h2 class="title">用語集</h2>
+      <p class="section-note">未日本語化のシステム用語。訳は私訳（非公式）。「?」付きは要確認。</p>
+
+      <div class="search-row">
+        <input type="text" class="search-input" id="search-glossary" placeholder="用語を検索（例: grid, shiny, pin）" aria-label="用語集を検索">
+      </div>
+      <div class="table-scroll">
+        <table id="table-glossary">
+          <thead><tr><th>原語</th><th>訳</th><th>説明</th><th>初出/文脈</th></tr></thead>
+          <tbody>
+            <tr><td class="en">Grid</td><td>グリッド</td><td>単語を作る盤面。1ステージに複数（"GRID 1 OF 5"表示あり）。行×列のサイズを持ちボスで変わることも（例: "The grid is 4x3."）</td><td class="muted">プレイ画面、ボス効果文</td></tr>
+            <tr><td class="en">Word Score</td><td>ワードスコア</td><td>提出した単語のスコア</td><td class="muted">アイテム効果</td></tr>
+            <tr><td class="en">Tile Score</td><td>タイルスコア</td><td>個々のタイルが持つスコア</td><td class="muted">アイテム効果</td></tr>
+            <tr><td class="en">Tile</td><td>タイル</td><td>4つの柱の一つ。文字タイルとの関係は要確認 <span class="unresolved">?</span></td><td class="muted">ストア説明文</td></tr>
+            <tr><td class="en">Stamp</td><td>スタンプ</td><td>ロードアウト要素。入手方法は未確認 <span class="unresolved">?</span></td><td class="muted">ストア説明文</td></tr>
+            <tr><td class="en">Sticker</td><td>ステッカー</td><td>ステージクリア後のショップ画面で購入できるアップグレード要素（確認済み）</td><td class="muted">ショップ画面</td></tr>
+            <tr><td class="en">Character</td><td>キャラクター</td><td>プレイアブルキャラクター、全11種</td><td class="muted">ストア説明文</td></tr>
+            <tr><td class="en">Pin</td><td>ピン（正式名称: Secret Society Pin）</td><td>キャラクター固有の基本アビリティ。「個数+2」か「確率+10%」の二択で段階的にアップグレード可能（価格は未確認）</td><td class="muted">実機アップグレード画面</td></tr>
+            <tr><td class="en">Encounter</td><td>エンカウント</td><td>1ステージ内の戦闘/挑戦単位。進行アイコンは通常🏠、ボス戦は骸骨アイコンに変化</td><td class="muted">ストア説明文、実機トップバー</td></tr>
+            <tr><td class="en">Boss</td><td>ボス</td><td>各ステージ最後に登場。全20種。「CHOOSE YOUR OPPONENT」で2体から1体を選ぶ形式</td><td class="muted">ストア説明文、実機画面</td></tr>
+            <tr><td class="en">Stage</td><td>ステージ</td><td>ランの進行単位。基本ランは5 Stage</td><td class="muted">ストア説明文</td></tr>
+            <tr><td class="en">Shop</td><td>ショップ</td><td>アイテムを購入する画面。Reroll/Restock/Continue/Adviceのボタンあり</td><td class="muted">プレイ画面</td></tr>
+            <tr><td class="en">Reroll</td><td>リロール</td><td>ショップの品揃えを更新する操作。コスト仕様は要確認 <span class="unresolved">?</span></td><td class="muted">ショップ画面</td></tr>
+            <tr><td class="en">Restock</td><td>リストック</td><td>$1。効果詳細は要確認 <span class="unresolved">?</span></td><td class="muted">ショップ画面</td></tr>
+            <tr><td class="en">Collection</td><td>コレクション</td><td>入手済みアイテム一覧を確認する画面</td><td class="muted">プレイ画面</td></tr>
+            <tr><td class="en">Challenge</td><td>チャレンジ</td><td>ゲームルールを大きく変える特別モード。全26種</td><td class="muted">ストア説明文</td></tr>
+            <tr><td class="en">Crown</td><td>クラウン</td><td>Challenge後の高難度ティア。スコア目標増・ショップ価格増</td><td class="muted">ストア説明文</td></tr>
+            <tr><td class="en">Quest</td><td>クエスト</td><td>ゲームルールを変える特定の縛り</td><td class="muted">ストア説明文</td></tr>
+            <tr><td class="en">Round Target / Score Target</td><td>ラウンド目標</td><td>クリアに必要なスコアの目標値。同一概念かは要確認 <span class="unresolved">?</span></td><td class="muted">Crown説明、Heart on Fireのアンロック条件</td></tr>
+            <tr><td class="en">COMMON / RARE / LEGENDARY / UNIQUE</td><td>レアリティ区分</td><td>アイテム・アビリティのレア度</td><td class="muted">ショップ/コレクション画面</td></tr>
+            <tr><td class="en">RED tile / BLUE tile</td><td>REDタイル/BLUEタイル</td><td>色付きタイル。Shiny化のトリガーや固有スキルの対象になる</td><td class="muted">Magic Wand、Rodman固有スキル</td></tr>
+            <tr><td class="en">Void tile</td><td>Voidタイル</td><td>グリッド上に出現するタイルの一種。10%でShiny化</td><td class="muted">Milky Way</td></tr>
+            <tr><td class="en">Shiny</td><td>シャイニー</td><td>タイルが変化する状態。効果詳細は要確認 <span class="unresolved">?</span></td><td class="muted">Milky Way、Magic Wand</td></tr>
+            <tr><td class="en">UNLOCK</td><td>アンロック</td><td>特定条件を満たすと解除されるアイテムの仕組み。アンロック後は通常ショップにも並ぶ</td><td class="muted">Down Under、Heart on Fire</td></tr>
+            <tr><td class="en">COLOURLESS</td><td>無色</td><td>色が付いていないタイル/単語。色付きタイルの逆概念</td><td class="muted">Parrot、Ornate Key</td></tr>
+            <tr><td class="en">Base value</td><td>基本値</td><td>文字タイルの数値。同じ文字でも値が異なる例あり（O=2/50）→ランダム割当の可能性</td><td class="muted">実機ショップ画面、Dangerous Summitの効果文</td></tr>
+            <tr><td class="en">? tile</td><td>？タイル（ワイルドカード）</td><td>任意の文字として使える万能タイルと推測。単体購入も可能（base value 1）</td><td class="muted">実機ショップ画面、Worn-out Jeans、Xray</td></tr>
+            <tr><td class="en">所持金（$）</td><td>所持金</td><td>ショップBUY下の$は価格（確認済み）。キャラパネル下部の$は別表示で、ラン中に増減するため所持金の可能性が高い</td><td class="muted">実機各画面</td></tr>
+          </tbody>
+        </table>
+        <p class="no-results" id="no-results-glossary">一致する用語がありません。</p>
+      </div>
+    </section>
+
+    <section class="block" id="characters">
+      <p class="eyebrow">Characters</p>
+      <h2 class="title">キャラクター</h2>
+      <p class="section-note">原文はゲーム内表記そのまま（誤字含む）。訳は私訳。</p>
+
+      <div class="card">
+        <h3>Nina Nix <span class="mono" style="font-size:.7rem;color:var(--ink-faint)">ニーナ・ニックス</span></h3>
+        <p class="sub">墓碑銘テキスト</p>
+        <blockquote class="game-text">Here is lies Nina NIX. She always had a <button class="term" data-id="sparkle-eye">sparkle in her eye</button> and a <button class="term" data-id="lust-life">lust for life</button> that made even the darkest days bright. May her spirit dance <button class="term" data-id="amongst">amoungst</button> the stars forever. Oh wait there she is, <button class="term" data-id="turns-out">turns out</button> she's a ghost now.</blockquote>
+        <p class="translation">ここにニーナ・ニックス眠る<span class="gloss">(here lies)</span>。彼女はいつも瞳にきらめきを宿し<span class="gloss">(sparkle in her eye)</span>、どんな暗い日々をも明るく照らす生への渇望<span class="gloss">(lust for life)</span>を持っていた。願わくば、その魂が永遠に星々の間で<span class="gloss">(amongst the stars)</span>踊りますように。……あ、いた。結局<span class="gloss">(turns out)</span>、幽霊になっていたらしい。</p>
+        <p class="note-label">メモ</p>
+        <ul class="note-list">
+          <li>原文ママ: "Here is lies"（誤植）、"amoungst"（"amongst"のスペルミス）</li>
+          <li>オチ: 感傷的な墓碑銘 → 実は本人（幽霊）がその場にいる、というギャグ構成</li>
+          <li>固有Pin: <button class="term" data-id="milky-way">Milky Way</button>（ほぼ確定。アップグレード画面で数値が完全一致）</li>
+          <li>ビジュアル（ほぼ確定）: 水色肌・ポニーテールのキャラクターがNina Nix。「UPGRADE YOUR SECRET SOCIETY PIN」画面でこのキャラのPin効果がMilky Wayの原文と数値まで一致した</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Rodman <span class="mono" style="font-size:.7rem;color:var(--ink-faint)">ロッドマン</span></h3>
+        <p class="sub">キャラクター説明文</p>
+        <blockquote class="game-text">Rodman is into words with splanshgy sounds and <button class="term" data-id="slippery">slippery</button> meanings. If there's one thing he likes more than letters, its <button class="term" data-id="red-tile">RED</button> or <button class="term" data-id="blue-tile">BLUE</button> letters they really <button class="term" data-id="tickle">tickle</button> his <button class="term" data-id="whiskers">whiskers</button>.</blockquote>
+        <p class="translation">ロッドマンは、はねるような響きとぬめっとした<span class="gloss">(slippery)</span>意味を持つ単語が好みだ。文字よりも好きなものがあるとすれば、それはREDやBLUEの文字——それらは彼のヒゲ<span class="gloss">(whiskers)</span>をくすぐって<span class="gloss">(tickle)</span>やまない。</p>
+        <p class="note-label">メモ</p>
+        <ul class="note-list">
+          <li>"splanshgy" は辞書にない語（造語かタイポか要確認）。"its" は "it's" の誤記と思われる</li>
+          <li>"whiskers" から動物系キャラクターと推測（要確認：ビジュアル未確認）</li>
+          <li>固有スキル: <button class="term" data-id="rodman-skill">下記参照</button></li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="block" id="abilities">
+      <p class="eyebrow">Abilities</p>
+      <h2 class="title">アビリティ / Pin</h2>
+      <p class="section-note">各キャラクターは固有の <button class="term" data-id="pin">Pin</button> を持つとされる。以下がPinに該当するかは要確認。</p>
+
+      <div class="card" id="ability-milky-way">
+        <h3>Milky Way <span class="chip chip--unique">UNIQUE</span></h3>
+        <p class="sub">所有キャラ: <button class="term" data-id="nina-nix">Nina Nix</button>（ほぼ確定）</p>
+        <blockquote class="game-text">Start of grid scatters 2 <button class="term" data-id="void-tile">Void</button> tiles. Voide tiles have a 10% chance to go <button class="term" data-id="shiny">Shiny</button></blockquote>
+        <p class="translation">グリッド開始時にVoidタイルを2枚散布する<span class="gloss">(scatters)</span>。Voidタイルは10%の確率<span class="gloss">(10% chance)</span>でShiny化する<span class="gloss">(go Shiny)</span>。</p>
+        <p class="note-label">メモ</p>
+        <ul class="note-list">
+          <li>"Voide tiles" は "Void tiles" のタイポと思われる</li>
+        </ul>
+        <p class="note-label">Secret Society Pinアップグレード（実機確認・3段階分）</p>
+        <div class="table-scroll" style="margin-bottom:6px">
+          <table>
+            <thead><tr><th>段階</th><th>選択肢</th><th>効果（原文）</th><th>変化点</th></tr></thead>
+            <tbody>
+              <tr><td class="muted">1段階目</td><td class="mono">A</td><td>Scatters 2 VOID tiles. <strong>20%</strong> chance to go SHINY</td><td class="muted">確率 10%→20%（+10%）</td></tr>
+              <tr><td class="muted">1段階目</td><td class="mono">B（選択）</td><td>Scatters <strong>4</strong> VOID tiles. 10% chance to go SHINY</td><td class="muted">個数 2→4（+2枚）</td></tr>
+              <tr><td class="muted">2段階目</td><td class="mono">A</td><td>Scatters 4 VOID tiles. <strong>20%</strong> chance to go SHINY</td><td class="muted">確率 10%→20%（+10%）</td></tr>
+              <tr><td class="muted">2段階目</td><td class="mono">B（選択）</td><td>Scatters <strong>6</strong> VOID tiles. 10% chance to go SHINY</td><td class="muted">個数 4→6（+2枚）</td></tr>
+              <tr><td class="muted">3段階目</td><td class="mono">A</td><td>Scatters 6 VOID tiles. <strong>20%</strong> chance to go SHINY</td><td class="muted">確率 10%→20%（+10%）</td></tr>
+              <tr><td class="muted">3段階目</td><td class="mono">B</td><td>Scatters <strong>8</strong> VOID tiles. 10% chance to go SHINY</td><td class="muted">個数 6→8（+2枚）</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="prose" style="font-size:.88rem;color:var(--ink-soft)">基本形（2枚・10%）が原文と完全一致。毎回「個数+2枚」か「確率+10%」かの二択で、<strong>倍増ではなく固定量の加算</strong>と2・3段階目のデータで確定した（1段階目だけ見ると偶然どちらも倍に見えた）。<strong>訂正</strong>: 以前ここに記載していた「$34/$37」はアップグレード価格ではなく、その時点でキャラクターパネルに表示されていた所持金額だった（アップグレード画面自体に価格タグは見当たらない）。</p>
+      </div>
+
+      <div class="card" id="ability-rodman">
+        <h3>Rodman固有スキル <span class="chip chip--unique">UNIQUE</span></h3>
+        <p class="sub">スキル名: TBD（原文に名称記載なし）　所有キャラ: <button class="term" data-id="rodman">Rodman</button></p>
+        <blockquote class="game-text">Start of frid: Scatters 1 <button class="term" data-id="red-tile">RED</button> tile and 1<button class="term" data-id="blue-tile">BLUE</button> tile</blockquote>
+        <p class="translation">グリッド開始時、REDタイル1枚とBLUEタイル1枚を散布する<span class="gloss">(scatters)</span>。</p>
+        <p class="note-label">メモ</p>
+        <ul class="note-list">
+          <li>"frid" は "Grid" のタイポ、"1BLUE" はスペース抜けと思われる</li>
+          <li>Milky Wayと同じ "Start of grid: Scatters..." 型フォーマット。他キャラのUNIQUEも同型の可能性</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="block" id="items">
+      <p class="eyebrow">Items</p>
+      <h2 class="title">アイテム（<button class="term" data-id="sticker">Sticker</button>）</h2>
+      <p class="section-note">ステージクリア後のショップ画面で購入できる。この画面のアイテムは<button class="term" data-id="sticker">Sticker</button>であることを確認済み。</p>
+
+      <div class="search-row">
+        <input type="text" class="search-input" id="search-items" placeholder="アイテムを検索（例: score, red, grid）" aria-label="アイテムを検索">
+      </div>
+      <div class="table-scroll">
+        <table id="table-items">
+          <thead><tr><th>名前</th><th>レア度</th><th>価格</th><th>効果（原文）</th><th>訳（原語を小さく併記）</th></tr></thead>
+          <tbody>
+            <tr><td class="en">Alembic Flask</td><td><span class="chip chip--common">COMMON</span></td><td class="muted">—</td><td>Consecutive numbers get +25 TILE SCORE</td><td class="ja">連続<span class="gloss">(consecutive)</span>した数字はTile Scoreが+25される</td></tr>
+            <tr><td class="en">Magic Wand</td><td><span class="chip chip--common">COMMON</span></td><td class="muted">$12</td><td>START OF GRID: 25% chance for 1 RED or BLUE tile to become SHINY</td><td class="ja">グリッド開始時、REDかBLUEのタイル1枚が25%の確率<span class="gloss">(25% chance)</span>でShinyになる</td></tr>
+            <tr><td class="en">Ham Sandwich</td><td><span class="chip chip--common">COMMON</span></td><td class="muted">—</td><td>If your word starts and ends with the same letter, +25 WORD SCORE</td><td class="ja">単語の最初と最後<span class="gloss">(starts and ends)</span>が同じ文字ならWord Scoreが+25される</td></tr>
+            <tr><td class="en">Paper Lantern</td><td><span class="chip chip--common">COMMON</span></td><td class="muted">—</td><td>START OF GRID: Positions which were RED in the previous word turn RED <span class="unresolved">原文不明瞭?</span></td><td class="ja">直前の単語<span class="gloss">(previous word)</span>でREDだったマスがREDになる（意味不確定）</td></tr>
+            <tr><td class="en">Waxy Vizor</td><td><span class="chip chip--common">COMMON</span></td><td class="muted">—</td><td>START OF GRID: Vs, Ws, Xs, Ys and Zs become BLUE</td><td class="ja">グリッド開始時、V・W・X・Y・Zの文字がBLUEになる</td></tr>
+            <tr><td class="en">Artist's Palette</td><td><span class="chip chip--common">COMMON</span></td><td class="muted">$8</td><td>Coloured tiles get +4〜+6 TILE SCORE <span class="unresolved">数値変動?</span></td><td class="ja">色付きタイルのTile Scoreが+4〜+6（未所持でも+6表示を確認、原因は要検証）</td></tr>
+            <tr><td class="en">Avocado</td><td><span class="chip chip--rare">RARE</span></td><td class="muted">$20</td><td>x2 WORD SCORE. Shop prices are doubled. Best served fresh</td><td class="ja">Word Scoreが×2。ショップ価格が2倍<span class="gloss">(doubled)</span>に。"新鮮なうちに"<span class="gloss">(best served fresh)</span>という食べ物ジョーク付き</td></tr>
+            <tr><td class="en">Axe</td><td><span class="chip chip--common">COMMON</span></td><td class="muted">—</td><td>If your word has 3 or fewer tiles, get +3 WORD SCORE</td><td class="ja">単語が3文字以下<span class="gloss">(3 or fewer tiles)</span>ならWord Scoreが+3される</td></tr>
+            <tr><td class="en">Backpack</td><td><span class="chip chip--common">COMMON</span></td><td class="muted">—</td><td>START OF GRID: Place 2 RED s on their starting tiles <span class="unresolved">原文不明瞭?</span></td><td class="ja">REDタイル2つを開始位置<span class="gloss">(starting tiles)</span>に配置（意味不確定）</td></tr>
+            <tr><td class="en">Banana</td><td><span class="chip chip--rare">RARE</span></td><td class="muted">—</td><td>For letters which occur at least 5 times, get WORD SCORE + half that letter's count</td><td class="ja">5回以上出現する<span class="gloss">(occur at least 5 times)</span>文字は出現数の半分をWord Scoreに加算</td></tr>
+            <tr><td class="en">Bank</td><td><span class="chip chip--rare">RARE</span></td><td class="muted">—</td><td>START OF GRID: Convert letters to currencies where possible</td><td class="ja">グリッド開始時、可能な限り文字を通貨<span class="gloss">(currencies)</span>に変換する</td></tr>
+            <tr><td class="en">Bar Chart</td><td><span class="chip chip--rare">RARE</span></td><td class="muted">—</td><td>Do nothing (Submit) o improve this) <span class="unresolved">原文不明瞭?</span></td><td class="ja muted">（原文不明瞭のため翻訳不能）</td></tr>
+            <tr><td class="en">Bar Of Soap</td><td><span class="chip chip--legendary">LEGENDARY</span></td><td class="muted">—</td><td>Each unique tile colour in your word gives +7 consumable tile <span class="unresolved">原文一部不明瞭?</span></td><td class="ja">単語中の色の種類ごと<span class="gloss">(each unique tile colour)</span>に消費タイルを+7得る</td></tr>
+            <tr><td class="en">April Shower</td><td><span class="chip chip--common">COMMON</span></td><td class="muted">$9</td><td>START OF ENCOUNTER: Randomly chooses 3 letters of the alphabet. START OF GRID: Those letters become BLUE</td><td class="ja">エンカウント開始時、アルファベットから3文字ランダムに<span class="gloss">(randomly)</span>選ぶ。グリッド開始時それがBLUEになる</td></tr>
+            <tr><td class="en">Lipstick</td><td><span class="chip chip--common">COMMON</span></td><td class="muted">$10</td><td>START OF ENCOUNTER: Scatters 5 RED tiles</td><td class="ja">エンカウント開始時、REDタイルを5枚ばらまく<span class="gloss">(scatters)</span></td></tr>
+            <tr><td class="en">Wheezy Vixen</td><td><span class="chip chip--common">COMMON</span></td><td class="muted">$12</td><td>If your word starts with a letter V, W, X, Y or Z, get x2 WORD SCORE</td><td class="ja">単語がV/W/X/Y/Zで始まる<span class="gloss">(starts with)</span>ならWord Scoreが×2</td></tr>
+            <tr><td class="en">Cherries</td><td><span class="chip chip--common">COMMON</span></td><td class="muted">$10</td><td>Each RED tile used scatters 2 RED tiles onto the next grid</td><td class="ja">使用した<span class="gloss">(used)</span>REDタイル1枚につき次のグリッドにRED2枚をばらまく</td></tr>
+            <tr><td class="en">Fire Extinguisher</td><td><span class="chip chip--common">COMMON</span></td><td class="muted">$10</td><td>For each unused RED tile on the grid, get +5 WORD SCORE</td><td class="ja">使わなかった<span class="gloss">(unused)</span>REDタイル1枚につきWord Scoreが+5</td></tr>
+            <tr><td class="en">Dusty Coffin</td><td><span class="chip chip--common">COMMON</span></td><td class="muted">$12</td><td>For each VOID tile on the grid whose letter does not appear in your word, get +8 WORD SCORE</td><td class="ja">単語に含まれない<span class="gloss">(does not appear)</span>VOIDタイル1枚につきWord Scoreが+8</td></tr>
+            <tr><td class="en">Game Pad</td><td><span class="chip chip--common">COMMON</span></td><td class="muted">$12</td><td>START OF GRID: Scatters 1 VOID, 1 RED and 1 BLUE tile</td><td class="ja">グリッド開始時、VOID・RED・BLUEを1枚ずつばらまく</td></tr>
+            <tr><td class="en">Young Cardinal</td><td><span class="chip chip--common">COMMON</span></td><td class="muted">$8</td><td>Items with 'red' in their description cost $4 less</td><td class="ja">説明文<span class="gloss">(description)</span>に"red"を含むアイテムは$4安くなる</td></tr>
+            <tr><td class="en">Hungry Snake</td><td><span class="chip chip--common">COMMON</span></td><td class="muted">$11</td><td>The grid wraps horizontally</td><td class="ja">グリッドが水平方向<span class="gloss">(horizontally)</span>にループする<span class="gloss">(wraps)</span></td></tr>
+            <tr><td class="en">Egg</td><td><span class="chip chip--common">COMMON</span></td><td class="muted">$13</td><td>If your word starts with a vowel, get x1.5 WORD SCORE</td><td class="ja">単語が母音<span class="gloss">(vowel)</span>で始まるならWord Scoreが×1.5</td></tr>
+            <tr><td class="en">Blueberries</td><td><span class="chip chip--rare">RARE</span></td><td class="muted">$14</td><td>If your word ends with a BLUE tile, get x2 WORD SCORE</td><td class="ja">単語がBLUEタイルで終わる<span class="gloss">(ends with)</span>ならWord Scoreが×2</td></tr>
+            <tr><td class="en">Worn-out Jeans</td><td><span class="chip chip--common">COMMON</span></td><td class="muted">$10</td><td>START OF GRID: 2 BLUE tiles become ?s</td><td class="ja">グリッド開始時、BLUEタイル2枚が<button class="term" data-id="wild-tile">？タイル</button>になる<span class="gloss">(become ?s)</span></td></tr>
+            <tr><td class="en">Pair Of Socks</td><td><span class="chip chip--common">COMMON</span></td><td class="muted">$11</td><td>If your word contains exactly 2 BLUE tiles, get x2 WORD SCORE</td><td class="ja">単語にBLUEタイルがちょうど2枚<span class="gloss">(exactly 2)</span>含まれるならWord Scoreが×2</td></tr>
+            <tr><td class="en">Xray</td><td><span class="chip chip--common">COMMON</span></td><td class="muted">$16</td><td>START OF GRID: BLUE vowels become ?s</td><td class="ja">グリッド開始時、BLUEの母音<span class="gloss">(vowels)</span>が？タイルになる</td></tr>
+            <tr><td class="en">Dango</td><td><span class="chip chip--rare">RARE</span></td><td class="muted">$18</td><td>Get WORD SCORE x unique tile colours used</td><td class="ja">使用した色の種類数<span class="gloss">(unique tile colours used)</span>分Word Scoreを掛ける</td></tr>
+            <tr><td class="en">Maple Leaf</td><td><span class="chip chip--common">COMMON</span></td><td class="muted">$9</td><td>Your first 2 RED tiles get x3 TILE SCORE</td><td class="ja">最初の2枚<span class="gloss">(first 2)</span>のREDタイルのTile Scoreが×3</td></tr>
+            <tr><td class="en">Telescope</td><td><span class="chip chip--common">COMMON</span></td><td class="muted">$12</td><td>RED tiles get +1 TILE SCORE for each RED tile used this encounter</td><td class="ja">このエンカウント中<span class="gloss">(this encounter)</span>に使ったREDタイル1枚につきRED全体のTile Scoreが+1</td></tr>
+            <tr><td class="en">Dangerous Summit</td><td><span class="chip chip--common">COMMON</span></td><td class="muted">$12</td><td>START OF GRID: The 3 highest base value tiles become VOID</td><td class="ja">グリッド開始時、<button class="term" data-id="base-value">base value</button>が高い上位3枚がVOIDになる</td></tr>
+            <tr><td class="en">Fish Cake</td><td><span class="chip chip--common">COMMON</span></td><td class="muted">$10</td><td>SHINY tiles get x2 TILE SCORE</td><td class="ja">Shinyタイルの<span class="gloss">(SHINY tiles)</span>Tile Scoreが×2</td></tr>
+            <tr><td class="en">Fountain</td><td><span class="chip chip--common">COMMON</span></td><td class="muted">$10</td><td>START OF GRID: Scatters 2 BLUE tiles</td><td class="ja">グリッド開始時、BLUEタイルを2枚ばらまく<span class="gloss">(scatters)</span></td></tr>
+            <tr><td class="en">Limnophila</td><td><span class="chip chip--common">COMMON</span></td><td class="muted">$8</td><td>If your word starts with a letter one later in the alphabet than the previous word, x1.5 WORD SCORE</td><td class="ja">直前の単語より1つ後のアルファベット<span class="gloss">(one later in the alphabet)</span>で始まるならWord Scoreが×1.5</td></tr>
+            <tr><td class="en">Graduation Cap</td><td><span class="chip chip--common">COMMON</span></td><td class="muted">$10</td><td>Get +3 WORD SCORE for each tile in your word</td><td class="ja">単語中のタイル1枚<span class="gloss">(each tile)</span>につきWord Scoreが+3</td></tr>
+            <tr><td class="en">Ferris Wheel</td><td><span class="chip chip--common">COMMON</span></td><td class="muted">$10</td><td>If your word starts and ends with different coloured tiles, get x1.5 WORD SCORE</td><td class="ja">最初と最後が異なる色のタイル<span class="gloss">(different coloured tiles)</span>ならWord Scoreが×1.5</td></tr>
+            <tr><td class="en">Teapot</td><td><span class="chip chip--common">COMMON</span></td><td class="muted">$9</td><td>START OF GRID: Scatters a BLUE tile for each grid seen this encounter</td><td class="ja">このエンカウントで見た<span class="gloss">(seen this encounter)</span>グリッド数だけBLUEをばらまく</td></tr>
+            <tr><td class="en">Chocolate Candy</td><td><span class="chip chip--common">COMMON</span></td><td class="muted">$10</td><td>START OF GRID: Ms and Ss become random colours</td><td class="ja">MとSの文字がランダムな色<span class="gloss">(random colours)</span>になる</td></tr>
+            <tr><td class="en">Stilton</td><td><span class="chip chip--common">COMMON</span></td><td class="muted">$12</td><td>BLUE tiles get +8 TILE SCORE</td><td class="ja">BLUEタイルのTile Scoreが+8</td></tr>
+            <tr><td class="en">Ornate Key</td><td><span class="chip chip--common">COMMON</span></td><td class="muted">$12</td><td>If your word does not contain COLOURLESS tiles, x1.5 WORD SCORE</td><td class="ja">無色タイル<button class="term" data-id="colourless">COLOURLESS</button>を含まないならWord Scoreが×1.5</td></tr>
+            <tr><td class="en">Electric Guitar</td><td><span class="chip chip--common">COMMON</span></td><td class="muted">$8</td><td>RED 'notes' (A-G) get +15 TILE SCORE</td><td class="ja">A〜Gの"音符"<span class="gloss">('notes' A-G)</span>にあたるREDタイルのTile Scoreが+15</td></tr>
+            <tr><td class="en">Kimono</td><td><span class="chip chip--common">COMMON</span></td><td class="muted">$16</td><td>Each BLUE tile used scatters a ? onto the next grid</td><td class="ja">使ったBLUEタイル1枚につき次のグリッドに<button class="term" data-id="wild-tile">？タイル</button>を1枚ばらまく</td></tr>
+            <tr><td class="en">Parachute</td><td><span class="chip chip--common">COMMON</span></td><td class="muted">$8</td><td>START OF GRID: If there are currently no RED tiles on the grid, scatters 3 RED tiles</td><td class="ja">グリッド上にREDが1枚もなければ<span class="gloss">(no RED tiles)</span>、REDを3枚ばらまく</td></tr>
+            <tr><td class="en">Bento Box</td><td><span class="chip chip--common">COMMON</span></td><td class="muted">$16</td><td>If your word starts with the same letter as your previous word, get x1.5 WORD SCORE</td><td class="ja">直前の単語と同じ文字で始まる<span class="gloss">(same letter as previous word)</span>ならWord Scoreが×1.5</td></tr>
+          </tbody>
+        </table>
+        <p class="no-results" id="no-results-items">一致するアイテムがありません。</p>
+      </div>
+
+      <p class="note-label" style="margin-top:26px">アンロック条件付きアイテム</p>
+
+      <div class="card" id="item-down-under">
+        <h3>Down Under <span class="chip chip--common">COMMON</span></h3>
+        <p class="sub">アンロック条件名: two steps back</p>
+        <blockquote class="game-text">ALL tiles get x -3 <button class="term" data-id="tile-score">Tile score</button></blockquote>
+        <p class="translation">全タイルのTile Scoreが ×(-3)<span class="gloss">(x -3)</span> になる</p>
+        <p class="note-label">アンロック条件</p>
+        <blockquote class="game-text">submit a word with a nagetive score</blockquote>
+        <p class="translation">マイナスのスコア<span class="gloss">(negative score)</span>を持つ単語を提出する<span class="gloss">(submit)</span></p>
+        <ul class="note-list">
+          <li>"x -3" は倍率（乗算）と思われる。加算型（+25 SCORE等）が多い中で珍しいパターン</li>
+          <li>"nagetive" は "negative" のタイポ</li>
+          <li>アンロック後は通常ショップにも並ぶことを確認（$9でBUY可能な状態を実機確認）</li>
+        </ul>
+      </div>
+
+      <div class="card" id="item-heart-on-fire">
+        <h3>Heart on Fire <span class="chip chip--legendary">LEGENDARY</span></h3>
+        <p class="sub">アンロック条件名: BLAZING</p>
+        <blockquote class="game-text">Get Words SCORE x longest consecutive run of <button class="term" data-id="red-tile">RED</button> tiles</blockquote>
+        <p class="translation">WORD SCOREに、REDタイルの最長連続数<span class="gloss">(longest consecutive run)</span>を掛ける</p>
+        <p class="note-label">アンロック条件</p>
+        <blockquote class="game-text">Submit a word worth at least 3x the overall round target</blockquote>
+        <p class="translation"><button class="term" data-id="round-target">ラウンド目標</button>の3倍以上の価値<span class="gloss">(worth at least 3x)</span>を持つ単語を提出する</p>
+        <ul class="note-list">
+          <li>"Words SCORE" は "WORD SCORE" の表記ゆれと思われる</li>
+          <li>名前 "Heart on Fire" とアンロック名 "BLAZING" がRED＝炎というテーマで統一</li>
+        </ul>
+      </div>
+
+      <div class="card" id="item-parrot">
+        <h3>Parrot <span class="chip chip--common">COMMON</span></h3>
+        <p class="sub">アンロック条件名: 0 DANG</p>
+        <blockquote class="game-text">COLOURLESS words get +8 WORD SCORE for each coloured tile on the grid</blockquote>
+        <p class="translation">無色の単語<span class="gloss">(colourless words)</span>は、グリッド上の色付きタイル1枚につきWord Scoreが+8</p>
+        <p class="note-label">アンロック条件</p>
+        <blockquote class="game-text">Get a 0x multiplier</blockquote>
+        <p class="translation">0倍の倍率<span class="gloss">(0x multiplier)</span>を獲得する<span class="gloss">(get)</span></p>
+        <ul class="note-list">
+          <li>実機の「UNLOCK!」演出そのものを確認。カード→南京錠が開く→アンロック条件カード、という2段構成</li>
+          <li>色付きタイルに依存せず「無色の単語」を作ることに価値を与える、他とは逆方向の効果</li>
+        </ul>
+      </div>
+
+      <p class="note-label" style="margin-top:30px">文字タイル購入の実例（<button class="term" data-id="base-value">base value</button>確定）</p>
+      <div class="table-scroll" style="margin-bottom:8px">
+        <table>
+          <thead><tr><th>文字</th><th>base value</th><th>価格</th></tr></thead>
+          <tbody>
+            <tr><td class="en">T</td><td class="mono">50</td><td class="muted">$4</td></tr>
+            <tr><td class="en">O</td><td class="mono">2</td><td class="muted">$3</td></tr>
+            <tr><td class="en">O</td><td class="mono">50</td><td class="muted">$4</td></tr>
+            <tr><td class="en">D</td><td class="mono">3</td><td class="muted">$3</td></tr>
+            <tr><td class="en">K</td><td class="mono">-5</td><td class="muted">$2</td></tr>
+            <tr><td class="en">C</td><td class="mono">-3</td><td class="muted">$2</td></tr>
+            <tr><td class="en">R</td><td class="mono">50</td><td class="muted">$4</td></tr>
+            <tr><td class="en">?</td><td class="mono">1</td><td class="muted">$3</td></tr>
+            <tr><td class="en">I</td><td class="mono">-1</td><td class="muted">$2</td></tr>
+            <tr><td class="en">O</td><td class="mono">2</td><td class="muted">$3</td></tr>
+            <tr><td class="en">G</td><td class="mono">-2</td><td class="muted">$2</td></tr>
+            <tr><td class="en">A</td><td class="mono">2</td><td class="muted">$3</td></tr>
+            <tr><td class="en">E</td><td class="mono">2</td><td class="muted">$3</td></tr>
+            <tr><td class="en">N</td><td class="mono">2</td><td class="muted">$3</td></tr>
+            <tr><td class="en">?</td><td class="mono">0</td><td class="muted">$2</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="prose" style="font-size:.88rem;color:var(--ink-soft)">数値の呼び名は<button class="term" data-id="base-value">base value</button>（Dangerous Summitの効果文で確定）。同じ「O」でも2と50の両方を確認しており、文字固定ではなくランダムに割り振られている可能性が高い。<button class="term" data-id="wild-tile">？タイル</button>（ワイルドカード）も単体購入できることを確認した。</p>
+
+      <p class="eyebrow" style="margin-top:34px">Synergy notes</p>
+      <h3 style="font-size:1.05rem;margin:0 0 4px">シナジー考察（アーキタイプ別・未検証）</h3>
+      <p class="section-note">実プレイで確かめたわけではなく、効果テキストから読める組み合わせの仮説。アイテムが増えてきたので構築の軸（アーキタイプ）ごとに、対応するキャラクターも含めて整理した。</p>
+
+      <div class="card">
+        <h4 style="margin:0 0 8px;font-size:.95rem">🔴 RED軸 <span class="sub" style="text-transform:none;letter-spacing:0">アンカー: <button class="term" data-id="rodman">Rodman</button>（固有スキルでRED+BLUEを散布）</span></h4>
+        <ul class="note-list" style="font-size:.9rem">
+          <li><strong>供給</strong>: Lipstick, Parachute（RED0枚のとき3枚補充）, Game Pad, Rodman固有スキル</li>
+          <li><strong>消費して伸ばす</strong>: Cherries（使うと増殖）→ Maple Leaf/Telescope（強化）→ <button class="term" data-id="heart-on-fire">Heart on Fire</button>（連続数で爆発）が王道ルート</li>
+          <li><strong>温存して稼ぐ（逆方向）</strong>: Fire Extinguisher — 消費ルートと矛盾するため別ビルドとして考えたい</li>
+          <li><strong>経済</strong>: Young Cardinal（'red'を含む説明文のアイテムが$4引き）</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h4 style="margin:0 0 8px;font-size:.95rem">🔵 BLUE / 希少字軸 <span class="sub" style="text-transform:none;letter-spacing:0">アンカー: Rodman</span></h4>
+        <ul class="note-list" style="font-size:.9rem">
+          <li><strong>供給</strong>: Fountain, April Shower, Waxy Vizor（V/W/X/Y/Z→BLUE）, Game Pad, Rodman固有スキル</li>
+          <li><strong>消費</strong>: Wheezy Vixen（V/W/X/Y/Z始まりで×2）, Blueberries（BLUE終わりで×2）, Pair Of Socks（ちょうど2枚で×2）, Stilton（+8 TILE SCORE）</li>
+          <li><strong>変換</strong>: Worn-out Jeans/Xray（BLUE→<button class="term" data-id="wild-tile">？</button>化）, Kimono（使ったBLUEが次グリッドへ？をばらまく）</li>
+          <li>王道: <strong>Waxy Vizor → Wheezy Vixen</strong>（希少字をBLUE化して視認しやすくし、その文字始まりの単語で×2）</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h4 style="margin:0 0 8px;font-size:.95rem">🟣 VOID軸 <span class="sub" style="text-transform:none;letter-spacing:0">アンカー: <button class="term" data-id="nina-nix">Nina Nix</button>（<button class="term" data-id="milky-way">Milky Way</button> Pin）</span></h4>
+        <ul class="note-list" style="font-size:.9rem">
+          <li><strong>供給</strong>: Milky Way（Pin、2〜8枚）, Game Pad, Dangerous Summit（高base valueをVOID化）</li>
+          <li><strong>消費</strong>: Dusty Coffin（未使用VOID1枚につき+8 WORD SCORE）</li>
+          <li>ボス「コウモリ／モグラ」のVOID散布・グリッド変更効果（<button class="term" data-id="void-tile">VOID</button>関連）もこのビルドなら追い風になりうる</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h4 style="margin:0 0 8px;font-size:.95rem">⚪ 無色（<button class="term" data-id="colourless">COLOURLESS</button>）軸</h4>
+        <ul class="note-list" style="font-size:.9rem">
+          <li>Parrot（無色の単語に盤面の色付きタイル数×8）と Ornate Key（単語に無色タイルを含まないと×1.5）は条件が逆方向のため、同時に満たすのは難しそう。単独運用向き（要検証）</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h4 style="margin:0 0 8px;font-size:.95rem">🔢 連番・語順軸 ／ ➖ マイナス値軸</h4>
+        <ul class="note-list" style="font-size:.9rem">
+          <li>Alembic Flask（連番+25）、Limnophila（前の単語+1文字で×1.5）、Bento Box（前の単語と同じ頭文字で×1.5）— LimnophilaとBento Boxは条件が逆なので同時成立不可</li>
+          <li>K(-5)/C(-3)/I(-1)などマイナスbase valueタイル × Down Under（全タイル×-3）— マイナス×マイナスでプラスに転じる特殊ビルドの可能性（要検証）。Down Under自体のアンロック条件（マイナススコア提出）もこれらのタイルで満たせそう</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="block" id="bosses">
+      <p class="eyebrow">Bosses</p>
+      <h2 class="title">ボス</h2>
+      <p class="section-note">「CHOOSE YOUR OPPONENT」画面で2体から1体を選ぶ形式（実機確認）。ボス名は未確認のため見た目による仮称。</p>
+
+      <div class="card">
+        <h3>ボス（仮称: 蛾のボス）</h3>
+        <p class="sub">クリーム/黄土色の蛾のようなクリーチャー、触角あり</p>
+        <blockquote class="game-text">2 coloured tiles become colourless.</blockquote>
+        <p class="translation">色付きタイル<span class="gloss">(coloured tiles)</span>2枚が無色<span class="gloss">(colourless)</span>になる。</p>
+        <p class="note-label">メモ</p>
+        <ul class="note-list">
+          <li><button class="term" data-id="red-tile">RED</button>/<button class="term" data-id="blue-tile">BLUE</button>依存のシナジー（Wheezy Vixen、Rodmanの固有スキルなど）を弱体化させる効果と思われる</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>ボス（仮称: モグラのボス）</h3>
+        <p class="sub">黒っぽい体にピンクの手足を持つモグラ/影のようなクリーチャー</p>
+        <blockquote class="game-text">Scatters 3 VOID tiles onto each grid.</blockquote>
+        <p class="translation">各グリッド<span class="gloss">(each grid)</span>にVOIDタイルを3枚ばらまく<span class="gloss">(scatters ... onto)</span>。</p>
+        <p class="note-label">メモ</p>
+        <ul class="note-list">
+          <li>一見妨害効果だが、<button class="term" data-id="void-tile">VOID</button>軸ビルド（Dusty Coffin、Milky Way）なら逆に追い風。ストア説明文「manipulated into multiplying your score even higher」の実例と思われる</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>ボス（仮称: シャーク／オオカミ系のボス）</h3>
+        <p class="sub">灰紫色の体に白い腹、鋭い歯を持つクリーチャー</p>
+        <blockquote class="game-text">Steals $3 from you for each word submitted.</blockquote>
+        <p class="translation">単語を提出する<span class="gloss">(word submitted)</span>たびに$3を奪う<span class="gloss">(steals)</span>。</p>
+        <p class="note-label">メモ</p>
+        <ul class="note-list">
+          <li>所持金に直接ダメージを与えるタイプ。単語をたくさん提出するプレイスタイルと相性が悪そう</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>ボス（仮称: キツネのボス）</h3>
+        <p class="sub">オレンジと白の毛並みのクリーチャー</p>
+        <blockquote class="game-text">You may only submit words with 5 or fewer tiles.</blockquote>
+        <p class="translation">5文字以下<span class="gloss">(5 or fewer tiles)</span>の単語しか提出できない<span class="gloss">(you may only submit)</span>。</p>
+        <p class="note-label">メモ</p>
+        <ul class="note-list">
+          <li>短い単語ビルド（Axe等）とは相性が良く、長い単語で稼ぐビルドには不利</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>ボス（仮称: ハイエナのボス）</h3>
+        <p class="sub">オレンジのモヒカン風の毛と斑点模様のクリーチャー</p>
+        <blockquote class="game-text">Forces you to sell an item at the beginning of the encounter.</blockquote>
+        <p class="translation">エンカウント開始時に<span class="gloss">(at the beginning of the encounter)</span>アイテムを1つ売却させられる<span class="gloss">(forces you to sell)</span>。</p>
+        <p class="note-label">メモ</p>
+        <ul class="note-list">
+          <li>Stickerを強制的に手放させる妨害。アップグレードを重ねたお気に入りを失うリスクがある</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>ボス（仮称: コウモリのボス）</h3>
+        <p class="sub">茶色い体に紫がかった翼のクリーチャー</p>
+        <blockquote class="game-text">The grid is 4x3.</blockquote>
+        <p class="translation">グリッドが4×3<span class="gloss">(4x3)</span>になる。</p>
+        <p class="note-label">メモ</p>
+        <ul class="note-list">
+          <li><button class="term" data-id="grid">Grid</button>に行×列のサイズがあり、ボスで変更されうることが確定した用例</li>
+        </ul>
+      </div>
+
+      <p class="prose" style="font-size:.88rem;color:var(--ink-soft)">ボス選択画面にも右側にキャラクターパネル（$表示付き）が出る。この$の意味（所持金かPin/Stickerロードアウトの合計値か）はまだ確定していない。</p>
+    </section>
+
+    <section class="block" id="study">
+      <p class="eyebrow">Study</p>
+      <h2 class="title">単語・文法</h2>
+      <p class="section-note">単語で遊ぶゲームなので、ついでにゲーム内テキストから英語も勉強するコーナー。</p>
+
+      <div class="search-row">
+        <input type="text" class="search-input" id="search-vocab" placeholder="単語を検索（例: slippery, amongst）" aria-label="単語帳を検索">
+      </div>
+      <div class="table-scroll">
+        <table id="table-vocab">
+          <thead><tr><th>単語・熟語</th><th>意味</th><th>出典</th></tr></thead>
+          <tbody>
+            <tr><td class="en">sparkle in one's eye</td><td>瞳の輝き、生き生きとした目つき</td><td class="muted">Nina Nix</td></tr>
+            <tr><td class="en">lust for life</td><td>生への渇望、貪欲な生きる意欲</td><td class="muted">Nina Nix</td></tr>
+            <tr><td class="en">amongst</td><td>～の間で（amongの文語的表現）</td><td class="muted">Nina Nix</td></tr>
+            <tr><td class="en">turns out (that)</td><td>実は～だと判明する</td><td class="muted">Nina Nix</td></tr>
+            <tr><td class="en">slippery</td><td>ぬるぬるした／つかみどころのない</td><td class="muted">Rodman</td></tr>
+            <tr><td class="en">tickle</td><td>くすぐる</td><td class="muted">Rodman</td></tr>
+            <tr><td class="en">whiskers</td><td>(動物の)ひげ</td><td class="muted">Rodman</td></tr>
+            <tr><td class="en">consecutive</td><td>連続した</td><td class="muted">Alembic Flask</td></tr>
+            <tr><td class="en">alembic</td><td>蒸留器（錬金術・化学器具）</td><td class="muted">Alembic Flask</td></tr>
+            <tr><td class="en">vizor</td><td>バイザー、面覆い（= visor）</td><td class="muted">Waxy Vizor</td></tr>
+            <tr><td class="en">currency / currencies</td><td>通貨（複数形はcurrencies）</td><td class="muted">Bank</td></tr>
+            <tr><td class="en">doubled</td><td>2倍になった（受動態）</td><td class="muted">Avocado</td></tr>
+          </tbody>
+        </table>
+        <p class="no-results" id="no-results-vocab">一致する単語がありません。</p>
+      </div>
+
+      <p class="note-label" style="margin-top:28px">文法メモ</p>
+
+      <div class="card">
+        <h3 class="mono" style="font-size:.9rem">"If there's one thing X likes more than Y, it's Z"</h3>
+        <p class="sub">比較を使った強調構文</p>
+        <blockquote class="game-text">If there's one thing he likes more than letters, its RED or BLUE letters they really tickle his whiskers.</blockquote>
+        <p class="prose" style="font-size:.9rem">「もしYよりも好きなものが一つあるとすれば、それはZだ」という強調の定型構文。正しくは "it's"（it is の短縮）だが原文は所有格 "its" になっている（誤記）。</p>
+      </div>
+
+      <div class="card">
+        <h3 class="mono" style="font-size:.9rem">"Here lies X"</h3>
+        <p class="sub">墓碑銘の定型句</p>
+        <blockquote class="game-text">Here is lies Nina NIX.</blockquote>
+        <p class="prose" style="font-size:.9rem">英語圏の墓石でよく使う "Here lies [名前]"（ここに[名前]眠る）。lieはここでは「横たわる」の自動詞（lie–lay–lain、他動詞のlay「横たえる」と混同注意）。原文は "is" が余分に入っている。</p>
+      </div>
+
+      <div class="card">
+        <h3 class="mono" style="font-size:.9rem">START OF GRID: ...</h3>
+        <p class="sub">条件節が省略されたゲームUI特有の文体</p>
+        <blockquote class="game-text">Start of grid scatters 2 Void tiles.</blockquote>
+        <p class="prose" style="font-size:.9rem">「トリガー: 効果」という省略文体。本来は "At the start of the grid, [it] scatters..." のように主語・前置詞を補って読む。</p>
+      </div>
+
+      <div class="card">
+        <h3 class="mono" style="font-size:.9rem">受動態 "prices are doubled"</h3>
+        <p class="sub">be動詞＋過去分詞</p>
+        <blockquote class="game-text">+2 WORD SCORE. Shop prices are doubled</blockquote>
+        <p class="prose" style="font-size:.9rem">「価格が2倍にされる」＝2倍になる、の意。ゲームのデメリット効果を表す時によく使う形。</p>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="disclaimer">
+    個人プレイでの理解・体験に基づく非公式メモです。公式情報ではありません。訳語は私訳であり、誤りがあれば随時修正します。原文の誤字・タイポはゲーム内表記のまま引用しています。
+  </footer>
+</div>
+
+<div id="tooltip" role="tooltip" hidden></div>
+
+<script>
+(function () {
+  var TERMS = {
+    "grid": { en: "Grid", ja: "グリッド", desc: "単語を作る盤面。行×列のサイズを持ち、ボスで変わることがある（例: 4x3）。", anchor: "#glossary" },
+    "colourless": { en: "COLOURLESS", ja: "無色", desc: "色が付いていないタイル/単語。色付きタイルの逆概念。", anchor: "#glossary" },
+    "word-score": { en: "Word Score", ja: "ワードスコア", desc: "提出した単語のスコア。", anchor: "#glossary" },
+    "tile-score": { en: "Tile Score", ja: "タイルスコア", desc: "個々のタイルが持つスコア。", anchor: "#glossary" },
+    "base-value": { en: "Base value", ja: "基本値", desc: "文字タイルに表示される数値。同じ文字でも値が変わることがある（ランダム割当の可能性）。", anchor: "#glossary" },
+    "wild-tile": { en: "? tile", ja: "？タイル（ワイルドカード）", desc: "任意の文字として使える万能タイルと推測。単体購入も可能。", anchor: "#glossary" },
+    "stamp": { en: "Stamp", ja: "スタンプ", desc: "ロードアウト要素の一つ。Stickerとの違いは要確認。", anchor: "#glossary" },
+    "sticker": { en: "Sticker", ja: "ステッカー", desc: "アップグレード要素の一つ。Stampとあわせて300種。", anchor: "#glossary" },
+    "character": { en: "Character", ja: "キャラクター", desc: "プレイアブルキャラクター。全11種。", anchor: "#glossary" },
+    "pin": { en: "Pin (Secret Society Pin)", ja: "ピン", desc: "キャラクター固有の基本アビリティ。$を払い「個数UP」か「確率UP」の二択でアップグレード可能。", anchor: "#glossary" },
+    "encounter": { en: "Encounter", ja: "エンカウント", desc: "1ステージ内の戦闘/挑戦単位。", anchor: "#glossary" },
+    "boss": { en: "Boss", ja: "ボス", desc: "各ステージ最後に登場。全20種。", anchor: "#glossary" },
+    "stage": { en: "Stage", ja: "ステージ", desc: "ランの進行単位。基本ランは5 Stage。", anchor: "#glossary" },
+    "challenge": { en: "Challenge", ja: "チャレンジ", desc: "ゲームルールを大きく変える特別モード。全26種。", anchor: "#glossary" },
+    "crown": { en: "Crown", ja: "クラウン", desc: "高難度ティア。スコア目標・ショップ価格が増える。", anchor: "#glossary" },
+    "quest": { en: "Quest", ja: "クエスト", desc: "ゲームルールを変える特定の縛り。", anchor: "#glossary" },
+    "round-target": { en: "Round Target", ja: "ラウンド目標", desc: "クリアに必要なスコアの目標値。Score Targetと同一概念かは要確認。", anchor: "#glossary" },
+    "red-tile": { en: "RED tile", ja: "REDタイル", desc: "色付きタイル。Shiny化や固有スキルの対象になる。", anchor: "#glossary" },
+    "blue-tile": { en: "BLUE tile", ja: "BLUEタイル", desc: "色付きタイル。Shiny化や固有スキルの対象になる。", anchor: "#glossary" },
+    "void-tile": { en: "Void tile", ja: "Voidタイル", desc: "グリッド上に出現するタイルの一種。10%の確率でShiny化。", anchor: "#glossary" },
+    "shiny": { en: "Shiny", ja: "シャイニー", desc: "タイルが変化する状態。効果詳細は要確認。", anchor: "#glossary" },
+    "unlock": { en: "UNLOCK", ja: "アンロック", desc: "特定条件で解除されるアイテムの仕組み。", anchor: "#glossary" },
+    "glossary-self": { en: "Glossary", ja: "用語集", desc: "システム用語の一覧はこちら。", anchor: "#glossary" },
+
+    "sparkle-eye": { en: "sparkle in one's eye", ja: "瞳の輝き、生き生きとした目つき", desc: "「have a sparkle in her eye」で生き生きした様子を表す。", anchor: "#study" },
+    "lust-life": { en: "lust for life", ja: "生への渇望", desc: "強い生きる意欲を表す決まり文句。", anchor: "#study" },
+    "amongst": { en: "amongst", ja: "～の間で", desc: "amongのやや文語的・古風な言い方。原文は amoungst とスペルミス。", anchor: "#study" },
+    "turns-out": { en: "turns out (that)", ja: "実は～だと判明する", desc: "意外な事実を明かす時に使う口語表現。", anchor: "#study" },
+    "slippery": { en: "slippery", ja: "ぬるぬるした／つかみどころのない", desc: "比喩的に「多義的で捉えにくい」の意でも使う。", anchor: "#study" },
+    "tickle": { en: "tickle", ja: "くすぐる", desc: "「tickle one's whiskers」は「大好物」の比喩表現。", anchor: "#study" },
+    "whiskers": { en: "whiskers", ja: "(動物の)ひげ", desc: "人間のあごひげは beard / mustache。", anchor: "#study" },
+    "consecutive": { en: "consecutive", ja: "連続した", desc: "connected in sequence。", anchor: "#study" },
+    "alembic": { en: "alembic", ja: "蒸留器", desc: "錬金術・化学で使う古い器具。やや専門語。", anchor: "#study" },
+    "vizor": { en: "vizor", ja: "バイザー、面覆い", desc: "一般的な綴りは visor。", anchor: "#study" },
+
+    "nina-nix": { en: "Nina Nix", ja: "ニーナ・ニックス", desc: "キャラクター。墓碑銘によれば実は幽霊。", anchor: "#characters" },
+    "rodman": { en: "Rodman", ja: "ロッドマン", desc: "キャラクター。RED/BLUEの文字が大好物。", anchor: "#characters" },
+    "rodman-skill": { en: "Rodman's skill", ja: "Rodman固有スキル", desc: "UNIQUE。グリッド開始時にREDタイル1枚とBLUEタイル1枚を散布。", anchor: "#ability-rodman" },
+    "milky-way": { en: "Milky Way", ja: "ミルキー・ウェイ", desc: "UNIQUE。グリッド開始時にVoidタイルを2枚散布。", anchor: "#ability-milky-way" },
+    "down-under": { en: "Down Under", ja: "アンロック型アイテム", desc: "COMMON。全タイルのTile Scoreが ×(-3) になる。", anchor: "#item-down-under" },
+    "heart-on-fire": { en: "Heart on Fire", ja: "アンロック型アイテム", desc: "LEGENDARY。WORD SCOREにREDタイルの最長連続数を掛ける。", anchor: "#item-heart-on-fire" }
+  };
+
+  var tooltip = document.getElementById("tooltip");
+  var openTrigger = null;
+  var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  function buildTooltip(data) {
+    tooltip.innerHTML =
+      '<div class="tt-en">' + data.en + '</div>' +
+      '<div class="tt-ja">' + data.ja + '</div>' +
+      '<div class="tt-desc">' + data.desc + '</div>' +
+      (data.anchor ? '<a class="tt-link" href="' + data.anchor + '">詳細を見る →</a>' : '');
+  }
+
+  function positionTooltip(trigger) {
+    var r = trigger.getBoundingClientRect();
+    tooltip.style.left = "0px";
+    tooltip.style.top = "0px";
+    tooltip.hidden = false;
+    var tw = tooltip.offsetWidth, th = tooltip.offsetHeight;
+    var left = r.left + r.width / 2 - tw / 2;
+    left = Math.max(10, Math.min(left, window.innerWidth - tw - 10));
+    var top = r.bottom + 8;
+    if (top + th > window.innerHeight - 10) top = r.top - th - 8;
+    tooltip.style.left = left + "px";
+    tooltip.style.top = top + "px";
+  }
+
+  function showTooltip(trigger) {
+    var data = TERMS[trigger.dataset.id];
+    if (!data) return;
+    buildTooltip(data);
+    positionTooltip(trigger);
+    trigger.setAttribute("aria-expanded", "true");
+    openTrigger = trigger;
+  }
+
+  function hideTooltip() {
+    tooltip.hidden = true;
+    if (openTrigger) openTrigger.setAttribute("aria-expanded", "false");
+    openTrigger = null;
+  }
+
+  document.querySelectorAll(".term").forEach(function (el) {
+    el.setAttribute("type", "button");
+    el.setAttribute("aria-expanded", "false");
+    el.addEventListener("mouseenter", function () { showTooltip(el); });
+    el.addEventListener("mouseleave", function () { if (!el.matches(":focus-visible")) hideTooltip(); });
+    el.addEventListener("focus", function () { showTooltip(el); });
+    el.addEventListener("blur", function () { hideTooltip(); });
+    el.addEventListener("click", function (e) {
+      e.preventDefault();
+      if (openTrigger === el) { hideTooltip(); } else { showTooltip(el); }
+    });
+  });
+
+  document.addEventListener("click", function (e) {
+    if (openTrigger && !e.target.closest(".term") && !e.target.closest("#tooltip")) hideTooltip();
+  });
+  document.addEventListener("keydown", function (e) { if (e.key === "Escape") hideTooltip(); });
+  window.addEventListener("scroll", hideTooltip, { passive: true });
+
+  document.querySelectorAll(".tt-link").forEach(function () {});
+  tooltip.addEventListener("click", function (e) {
+    var link = e.target.closest(".tt-link");
+    if (link) {
+      hideTooltip();
+    }
+  });
+
+  function wireSearch(inputId, tableId, noResultsId) {
+    var input = document.getElementById(inputId);
+    var table = document.getElementById(tableId);
+    var noResults = document.getElementById(noResultsId);
+    if (!input || !table) return;
+    var rows = Array.prototype.slice.call(table.querySelectorAll("tbody tr"));
+    input.addEventListener("input", function () {
+      var q = input.value.trim().toLowerCase();
+      var visible = 0;
+      rows.forEach(function (row) {
+        var match = row.textContent.toLowerCase().indexOf(q) !== -1;
+        row.style.display = match ? "" : "none";
+        if (match) visible++;
+      });
+      if (noResults) noResults.style.display = (q && visible === 0) ? "block" : "none";
+    });
+  }
+
+  wireSearch("search-glossary", "table-glossary", "no-results-glossary");
+  wireSearch("search-items", "table-items", "no-results-items");
+  wireSearch("search-vocab", "table-vocab", "no-results-vocab");
+
+  document.querySelectorAll('.navlinks a[href^="#"]').forEach(function (a) {
+    a.addEventListener("click", function (e) {
+      var target = document.querySelector(a.getAttribute("href"));
+      if (target) {
+        e.preventDefault();
+        target.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "start" });
+      }
+    });
+  });
+})();
+</script>
+</body>
+</html>
